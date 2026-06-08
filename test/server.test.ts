@@ -51,3 +51,12 @@ test('alignment row', () => {
 test('empty rows yields empty string', () => {
   assert.equal(renderMarkdownTable({ rows: [] }), '');
 });
+
+test('normalizes CRLF and CR line breaks to spaces', () => {
+  const out = renderMarkdownTable({ rows: [{ x: 'line1\r\nline2\rline3\nline4' }] });
+  const lines = out.split('\n');
+  // The row must stay on a single physical line with no stray \r.
+  assert.equal(lines.length, 3);
+  assert.equal(lines[2], '| line1 line2 line3 line4 |');
+  assert.ok(!out.includes('\r'));
+});

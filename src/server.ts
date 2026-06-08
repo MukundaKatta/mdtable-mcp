@@ -26,7 +26,9 @@ export interface RenderOpts {
 
 function escapeCell(v: unknown): string {
   if (v === null || v === undefined) return '';
-  return String(v).replace(/\|/g, '\\|').replace(/\n/g, ' ');
+  return String(v)
+    .replace(/\|/g, '\\|')
+    .replace(/\r\n?|\n/g, ' ');
 }
 
 function alignBar(a: Align | undefined): string {
